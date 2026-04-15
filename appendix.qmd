@@ -1,0 +1,35 @@
+
+---
+title: "Appendix - AI Usage"
+author: Aditya Sharma
+format: 
+  html: default
+  pdf: default
+---
+
+#### AI Assistance Used
+
+This analysis used **Perplexity AI** to:
+
+##### 1) Explain of Business terms
+
+- **Customer Segments**: Explained SMB = Small/Medium Businesses
+
+![](images/smb.jpg)
+
+##### 2) Fix  grammatical/punctuation errors in my write-up
+
+![](images/grammatical1.jpg)
+![](images/grammatical2.jpg)
+
+##### 3) Code enhancement (to change bar graph colour)
+
+![](images/graph_colour_change.jpg)
+
+##### 4) Help with the code to create an analysis table to compare Marketing Spend and Purchase amount
+
+![](images/mean_median.jpg)
+
+##### 5) To clear confusion regarding the sequence of usage of a function (is.na)
+
+![](images/function1.jpg)
