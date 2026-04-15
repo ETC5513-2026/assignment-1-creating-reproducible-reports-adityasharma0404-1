@@ -1,0 +1,97 @@
+---
+title: "Marketing Spend Analysis - Does More Marekting Spend equal More Purchases?"
+format:
+  html: default
+  pdf: default
+execute: 
+  echo: false
+  warning: false
+  message: false
+editor: visual
+---
+
+### Installing all the necessary libraries for the operation
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(knitr)
+```
+
+
+```{r}
+data <- read_csv("data/marketing_data.csv")
+```
+
+
+```{r}
+cleaned_data <- data |>
+  mutate(
+    marketingspend = as.numeric(marketingspend),
+    purchaseamount = as.numeric(purchaseamount)
+  ) |>
+  filter(!is.na(marketingspend), !is.na(purchaseamount))
+```
+
+## INTRODUCTION
+This dataset shows how marketing spend affects customer purchases across different segments. The research tests if higher marketing spend leads to higher purchase amounts. Understanding this helps make better marketing decisions. The analysis uses clean customer campaign data.
+
+## MY RESEARCH QUESTION
+Does higher marketing spend per customer lead to higher purchase amounts? My analysis compares the relationship using data visualizations. My goal here is to see if the campaign was effective.
+
+## DATA INTRODUCTION
+The dataset contains customer ID, signup date, marketing spend, visits, purchase amount, segment, and notes for each customer. This data shows how marketing investments impact purchases. Cleaning converted spend and purchase columns to numbers and removed missing values. No duplicate customers were found.
+
+## DATASET DESCRIPTION
+This dataset contains `r nrow(cleaned_data)` observations and `r ncol(cleaned_data)` variables.
+
+```{r}
+str(cleaned_data)
+```
+
+```{r}
+summary_table <- data.frame(
+  Variable = c("Marketing Spend", "Purchase Amount"),
+  Mean = c(
+    mean(cleaned_data$marketingspend, na.rm = TRUE),
+    mean(cleaned_data$purchaseamount, na.rm = TRUE)
+  ),
+  Median = c(
+    median(cleaned_data$marketingspend, na.rm = TRUE),
+    median(cleaned_data$purchaseamount, na.rm = TRUE)
+  )
+)
+knitr::kable(summary_table)
+```
+
+Table 1 shows the mean and median values for marketing spend and purchase amount.
+
+```{r}
+ggplot(cleaned_data, aes(x = segment)) +
+  geom_bar() +
+  labs(
+    title = "Customer Segments",
+    x = "Segment",
+    y = "Count"
+  )
+```
+
+Figure 1 shows customer distribution by segment.
+
+```{r}
+ggplot(cleaned_data, aes(x = marketingspend, y = purchaseamount)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Marketing Spend vs Purchase Amount",
+    x = "Marketing Spend",
+    y = "Purchase Amount"
+  )
+```
+
+Figure 2 shows the relationship between marketing spend and purchase amount.
+
+## RESULTS
+Table 1 shows average marketing spend of `r round(mean(cleaned_data$marketingspend, na.rm = TRUE), 1)` and average purchase amount of `r round(mean(cleaned_data$purchaseamount, na.rm = TRUE), 1)`. Figure 1 shows most customers are in Consumer segment. Figure 2 shows a positive trend between spend and purchases. Higher marketing spend leads to higher purchase amounts.
